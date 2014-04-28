@@ -14,6 +14,27 @@ module.exports = function(grunt) {
 
     // Project Configuration
     grunt.initConfig({
+        mkdir: {
+            all: {
+                options: {
+                    create: ['data/db']
+                }
+            }
+        },
+        shell: {
+            mongo: {
+                command: 'mongod --dbpath ./data/db',
+                options: {
+                    async: true,
+                    stdout: false,
+                    stderr: false,
+                    failOnError: true,
+                    execOptions: {
+                        cwd: '.'
+                    }
+                }
+            }
+        },
         pkg: grunt.file.readJSON('package.json'),
         assets: grunt.file.readJSON('server/config/assets.json'),
         watch: {
@@ -115,7 +136,9 @@ module.exports = function(grunt) {
     if (process.env.NODE_ENV === 'production') {
         grunt.registerTask('default', ['cssmin', 'uglify', 'concurrent']);
     } else {
-        grunt.registerTask('default', ['jshint', 'csslint', 'concurrent']);
+        grunt.loadNpmTasks('grunt-shell-spawn');
+        grunt.loadNpmTasks('grunt-mkdir');
+        grunt.registerTask('default', ['mkdir','shell','jshint', 'csslint', 'concurrent']);
     }
 
     //Test task.

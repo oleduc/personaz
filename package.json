@@ -1,16 +1,9 @@
 {
-  "name": "mean",
-  "description": "MEAN.io: A fullstack javascript platformed powerd by MongoDB, ExpressJS, AngularJS, NodeJS.",
-  "version": "0.3.2",
+  "name": "lean",
+  "description": "So small!!",
+  "version": "0.1",
   "private": false,
-  "author": "Linnovate <mean@linnovate.net>",
-  "contributors": [
-    {"name":"Lior Kesos", "mail": "lior@linnovate.net"},
-    {"name":"Yonatan Ellman", "mail": "yonatan@linnovate.net"},
-    {"name":"Ehud Shahak", "mail": "ehud@linnovate.net"},
-    {"name":"Amos Haviv", "mail": "mail@amoshaviv"},
-    {"name":"Drew Fyock", "mail": "drew@steelbisondev.com"}
-  ],
+  "author": "Wernesgruner <prog@leduc.cc>",
   "repository": {
     "type": "git",
     "url": "https://github.com/linnovate/mean.git"
@@ -62,6 +55,8 @@
     "assetmanager": "^0.1.1",
     "grunt-karma": "^0.6.2",
     "grunt-mocha-test": "latest",
+    "grunt-shell-spawn": "latest",
+    "grunt-mkdir": "latest",
     "karma": "^0.10.4",
     "karma-coverage": "^0.1.0",
     "should": "2.1.1",

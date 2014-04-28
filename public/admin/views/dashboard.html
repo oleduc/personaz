@@ -1,0 +1,168 @@
+<style>
+    .panel{
+        opacity: 0.9;
+    }
+    .panel table{
+        color: #000;
+    }
+    .create button{
+        width: 100%;
+    }
+    .create button,
+    .create input,
+    .create textarea,
+    .create select{
+        min-height: 55px;
+        max-width: 100%;
+    }
+    .alignments{
+        width: 49%;
+        float: left;
+    }
+    .inclinations{
+        width: 49%;
+        float: left;
+        margin-left: 2%;
+    }
+</style>
+<div class="panel panel-default alignments">
+    <div class="panel-heading">Alignments</div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Alignment</th>
+                <th>Description</th>
+                <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="success">
+                <td>1</td>
+                <td>Good</td>
+                <td>You're a good person!</td>
+                <td>X | E</td>
+            </tr>
+            <tr class="warning">
+                <td>2</td>
+                <td>Neutral</td>
+                <td>You sometimes go this that are good or bad!</td>
+                <td>X | E</td>
+            </tr>
+            <tr class="danger">
+                <td>3</td>
+                <td>Evil</td>
+                <td>Boy, you serve your evilest instincts!</td>
+                <td>X | E</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="panel panel-default inclinations">
+    <div class="panel-heading">Inclinations</div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Inclination</th>
+                <th>Description</th>
+                <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Fucking crazy</td>
+                <td>You're a good person!</td>
+                <td>X | E</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Order fascist</td>
+                <td>You sometimes go this that are good or bad!</td>
+                <td>X | E</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Chaos monger</td>
+                <td>Boy, you serve your evilest instincts!</td>
+                <td>X | E</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="create row" style="display: none;">
+            <form>
+                <div class="form-group col-xs-3">
+                    <input type="text" class="form-control" placeholder="Enter name">
+                </div>
+                <div class="form-group col-xs-7">
+                    <textarea class="form-control" placeholder="Description"></textarea>
+                </div>
+                <div class="form-group col-xs-2">
+                    <button type="submit" class="btn btn-lg btn-default">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default rules" style="clear: both;">
+    <div class="panel-heading">Rules</div>
+    <div class="panel-body">
+
+    </div>
+</div>
+<div class="panel panel-default tasks" style="clear: both;">
+    <div class="panel-heading">Tasks</div>
+    <div class="panel-body">
+    </div>
+</div>
+<style>
+    .form--overlay{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 100px;
+    }
+</style>
+<div class="form--overlay">
+    <div class="panel panel-default form" style="clear: both;">
+        <div class="panel-heading">Add item</div>
+        <div class="panel-body">
+            <div class="create row">
+                <form>
+                    <div class="form-group col-xs-3">
+                        <input class="form-control" placeholder="Name" />
+                    </div>
+                    <div class="form-group col-xs-5">
+                        <textarea class="form-control" placeholder="Description"></textarea>
+                    </div>
+                    <div class="form-group col-xs-1">
+                        <select class="form-control">
+                            <option>Evil</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-2">
+                        <select class="form-control">
+                            <option>Super crazy</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-xs-1">
+                        <button type="submit" class="btn btn-lg btn-default">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
