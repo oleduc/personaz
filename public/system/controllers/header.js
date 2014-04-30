@@ -13,7 +13,7 @@ angular.module('mean.system').controller('HeaderController', ['$scope', '$rootSc
         }, {
             'roles': ['authenticated'],
             'title': 'Generate a persona',
-            'link': 'create persona'
+            'link': 'generate persona'
         },{
             'roles': ['authenticated','admin'],
             'title': 'Dashboard',

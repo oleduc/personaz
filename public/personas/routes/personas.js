@@ -38,9 +38,9 @@ angular.module('mean.personas').config(['$stateProvider',
                     loggedin: checkLoggedin
                 }
             })
-            .state('article by id', {
-                url: '/articles/:articleId',
-                templateUrl: 'public/articles/views/view.html',
+            .state('generate persona', {
+                url: '/articles/generate',
+                templateUrl: 'public/personas/views/generate.html',
                 resolve: {
                     loggedin: checkLoggedin
                 }
