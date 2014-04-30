@@ -35,7 +35,7 @@ angular.module('mean.admin').config(['$stateProvider',
         // states for my app
         $stateProvider
             .state('dashboard admin', {
-                url: '/admin',
+                url: '/admin/dashboard',
                 templateUrl: 'public/admin/views/dashboard.html',
                 resolve: {
                     loggedin: checkLoggedin

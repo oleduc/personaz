@@ -36,7 +36,7 @@ var TaskSchema = new Schema({
 /**
  * Validations
  */
-TaskSchema.path('name').validate(function(description) {
+TaskSchema.path('description').validate(function(description) {
     return description.length;
 }, 'Description cannot be blank');
 

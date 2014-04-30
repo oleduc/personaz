@@ -41,4 +41,12 @@ angular.module('mean.personas').factory('Personas', ['$resource', function($reso
                 method: 'PUT'
             }
         });
+    }]).factory('Elements', ['$resource', function($resource) {
+        return $resource('elements/:elementId', {
+            personaId: '@_id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
+        });
     }]);

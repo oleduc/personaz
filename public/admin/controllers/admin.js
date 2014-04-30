@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('mean.admin')
-    .controller('AdminController', ['$scope','$stateParams','Global','Personas', function ($scope,$stateParams,Global) {
+    .controller('AdminController', ['$scope','$stateParams','Global','Elements', function ($scope,$stateParams,Global,Elements) {
         console.log('Admin Controller');
         $scope.global = Global;
         $scope.alignments = [];
@@ -11,6 +11,9 @@ angular.module('mean.admin')
 
         $scope.fetch = function(){
             console.log('Fetching');
+            Elements.query(function(alignments) {
+                console.log('Alignments',alignments);
+            });
         };
 
         $scope.findAlignments = function(){
