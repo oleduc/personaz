@@ -22,15 +22,16 @@ angular.module('mean.admin')
             $scope.tasks = [];
 
             $scope.showForm = function(type){
+                DynamicForm.reset();
                 $scope.form.type = type;
                 $scope.form.visible = true;
             };
 
             $scope.$watch('form.result.value',function(){
                 if($scope.form.result.action == 'add'){
-                    console.log($scope[$scope.form.type]);
                     $scope[$scope.form.type].push($scope.form.result.value);
                 }
+                DynamicForm.reset();
             });
 
             $scope.deleteElement = function(type,_id){
@@ -91,7 +92,7 @@ angular.module('mean.admin')
 
             };
     }])
-    .controller('AdminFormController', ['$scope','$stateParams','Global','DynamicForm','Alignments', 'Inclinations', function ($scope,$stateParams,Global,DynamicForm,Alignments,Inclinations) {
+    .controller('AdminFormController', ['$scope','$stateParams','Global','DynamicForm','Alignments', 'Inclinations','Rules', function ($scope,$stateParams,Global,DynamicForm,Alignments,Inclinations,Rules) {
         //Generic form controller
         console.log('AdminFormController');
 
@@ -118,7 +119,19 @@ angular.module('mean.admin')
                     $scope.form.fields.long = [{name:'description',rows:2,placeholder:'Description of the inclination'}];
                 break;
                 case 'rules':
-                    
+                    Resource = Rules;
+                    $scope.form.fields.short = [{name:'name',type:'text',placeholder:'Name of the rule'}];
+                    $scope.form.fields.long = [{name:'description',rows:2,placeholder:'Description of the rule'}];
+                    $scope.form.fields.links = [
+                        {
+                            name:'Alignments',
+                            fields: $scope.$parent.alignments
+                        },
+                        {
+                            name:'Inclinations',
+                            fields: $scope.$parent.inclinations
+                        }
+                    ];
                 break;
             }
         });
@@ -133,16 +146,19 @@ angular.module('mean.admin')
             }
            if(Resource){
                var resource = new Resource(models);
+               console.log(models);
+               /*
                resource.$save(function(element) {
                    $scope.form.result = {
                        action : 'add',
                        value : element
                    };
                });
+               */
            }
         };
 
         $scope.closeForm = function(){
-            $scope.form.visible = false;
+            DynamicForm.reset();
         };
     }]);
