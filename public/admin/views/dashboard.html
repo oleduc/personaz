@@ -1,6 +1,7 @@
 <section data-ng-controller="AdminController" data-ng-init="fetch()">
     <div class="panel panel-default alignments">
         <div class="panel-heading">Alignments</div>
+        <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('alignment')"></span>
         <div class="panel-body">
             <table class="table">
                 <thead>
@@ -8,27 +9,15 @@
                     <th>#</th>
                     <th>Alignment</th>
                     <th>Description</th>
-                    <th>Edit</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="success">
-                    <td>1</td>
-                    <td>Good</td>
-                    <td>You're a good person!</td>
-                    <td>X | E</td>
-                </tr>
-                <tr class="warning">
-                    <td>2</td>
-                    <td>Neutral</td>
-                    <td>You sometimes go this that are good or bad!</td>
-                    <td>X | E</td>
-                </tr>
-                <tr class="danger">
-                    <td>3</td>
-                    <td>Evil</td>
-                    <td>Boy, you serve your evilest instincts!</td>
-                    <td>X | E</td>
+                <tr data-ng-repeat="alignment in alignments" class="{{alignment.color}}">
+                    <td class="number">{{$index + 1}}</td>
+                    <td class="title">{{alignment.name}}</td>
+                    <td class="description">{{alignment.description}}</td>
+                    <td class="delete"><span class="glyphicon glyphicon-trash"></span></td>
                 </tr>
                 </tbody>
             </table>
@@ -36,6 +25,7 @@
     </div>
     <div class="panel panel-default inclinations" >
         <div class="panel-heading">Inclinations</div>
+        <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('inclination')"></span>
         <div class="panel-body">
             <table class="table">
                 <thead>
@@ -43,72 +33,58 @@
                     <th>#</th>
                     <th>Inclination</th>
                     <th>Description</th>
-                    <th>Edit</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Fucking crazy</td>
-                    <td>You're a good person!</td>
-                    <td>X | E</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Order fascist</td>
-                    <td>You sometimes go this that are good or bad!</td>
-                    <td>X | E</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Chaos monger</td>
-                    <td>Boy, you serve your evilest instincts!</td>
-                    <td>X | E</td>
+                <tr data-ng-repeat="inclination in inclinations" class="{{alignment.color}}">
+                    <td class="number">{{$index + 1}}</td>
+                    <td class="title">{{inclination.name}}</td>
+                    <td class="description">{{inclination.description}}</td>
+                    <td><span class="glyphicon glyphicon-trash"></span></td>
                 </tr>
                 </tbody>
             </table>
-            <div class="create row" style="display: none;">
-                <form>
-                    <div class="form-group col-xs-3">
-                        <input type="text" class="form-control" placeholder="Enter name">
-                    </div>
-                    <div class="form-group col-xs-7">
-                        <textarea class="form-control" placeholder="Description"></textarea>
-                    </div>
-                    <div class="form-group col-xs-2">
-                        <button type="submit" class="btn btn-lg btn-default">Save</button>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
     <div class="panel panel-default rules" style="clear: both;">
         <div class="panel-heading">Rules</div>
+        <span class="glyphicon glyphicon-plus add--element"></span>
         <div class="panel-body">
 
         </div>
     </div>
     <div class="panel panel-default tasks" style="clear: both;">
         <div class="panel-heading">Tasks</div>
+        <span class="glyphicon glyphicon-plus add--element"></span>
         <div class="panel-body">
         </div>
     </div>
+    <div ng-include src="'public/admin/views/form.html'"></div>
     <style>
         .panel{
+            position: relative;
             opacity: 0.9;
+        }
+        .alignments .panel-body,
+        .inclinations .panel-body,
+        .rules .panel-body,
+        .tasks .panel-body{
+            padding: 0;
         }
         .panel table{
             color: #000;
         }
-        .create button{
-            width: 100%;
+        .panel .add--element{
+            position: absolute;
+            top: 9px;
+            right: 9px;
+            color:#d3d3d3;
+            font-weight: 100;
+            font-size: 20px;
         }
-        .create button,
-        .create input,
-        .create textarea,
-        .create select{
-            min-height: 55px;
-            max-width: 100%;
+        .panel .add--element:hover{
+            color:#333333;
         }
         .panel.alignments{
             width: 49%;
@@ -118,6 +94,29 @@
             width: 49%;
             float: left;
             margin-left: 2%;
+        }
+        .table{
+            margin-bottom: 0;
+        }
+        .table td.title,
+        .table td.number,
+        .table td.delete{
+            vertical-align: middle;
+        }
+        .table td.delete{
+            color: #ac2925;
+        }
+        .table tr {
+            position: relative;
+        }
+        .table tr.green{
+            background-color: #dff0d8;
+        }
+        .table tr.yellow{
+            background-color: #fcf8e3;
+        }
+        .table tr.red{
+            background-color: #f2dede;
         }
     </style>
 </section>

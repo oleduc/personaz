@@ -1,45 +1,42 @@
 <section data-ng-controller="AdminFormController">
-    <div class="form--overlay">
+    <div class="form--overlay" ng-show="form.visible">
         <div class="panel panel-default form" style="clear: both;">
-            <a class="close"><span class="glyphicon glyphicon-remove"></span></a>
+            <a class="close"><span class="glyphicon glyphicon-remove" ng-click="closeForm()"></span></a>
             <div class="panel-heading">Add item</div>
             <div class="panel-body">
                 <div class="create">
                     <form>
-                        <div class="row">
-                            <div class="form-group col-xs-4">
-                                <input class="form-control" placeholder="Name" />
-                            </div>
-                            <div class="form-group col-xs-8">
-                                <textarea class="form-control" placeholder="Description"></textarea>
-                            </div>
+                        <div class="part short-fields">
+                            <input data-ng-repeat="field in form.fields.short" ng-model="form.fields.short[$index].model" type="{{field.type}}" name="{{field.name}}" placeholder="{{field.placeholder}}" class="form-control" style="width: {{(1/form.fields.short.length)*100}}%;" />
                         </div>
-                        <div class="row percentages">
-                            <div class="col-xs-2 alignments" style="padding-left: 0;">
-                                <div class="form-group col-xs-1">
-                                    <input class="form-control" placeholder="1" tooltip="Good" tooltip-placement="bottom" />
-                                </div>
-                                <div class="form-group col-xs-1">
-                                    <input class="form-control" placeholder="2" tooltip="Neutral" tooltip-placement="bottom" />
-                                </div>
-                                <div class="form-group col-xs-1">
-                                    <input class="form-control" placeholder="3" tooltip="Evil" tooltip-placement="bottom" />
-                                </div>
-                            </div>
-                            <div class="col-xs-10 inclinations">
-                                <div class="form-group col-xs-1">
-                                    <input class="form-control" placeholder="1" tooltip="Fucking crazy" tooltip-placement="bottom" />
-                                </div>
-                                <div class="form-group col-xs-1">
-                                    <input class="form-control" placeholder="2" tooltip="Order fascist" tooltip-placement="bottom" />
-                                </div>
-                                <div class="form-group col-xs-1">
-                                    <input class="form-control" placeholder="3" tooltip="Chaos monger" tooltip-placement="bottom" />
+                        <div class="part long-fields">
+                            <textarea data-ng-repeat="field in form.fields.long" ng-model="form.fields.long[$index].model" name="{{field.name}}" rows="{{field.rows}}" placeholder="{{field.placeholder}}" class="form-control"></textarea>
+                        </div>
+                        <div data-ng-repeat="link in form.fields.links" class="part panel panel-default field-group" >
+                            <div class="panel-body">
+                                {{link.name}}
+                                <div>
+                                    <table class="table table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th colspan="2">Alignments</th>
+                                            <th>%</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td colspan="2">Mark</td>
+                                            <td><input type="text" placeholder="0%" class="form-control percentage"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col-xs-1">
-                            <button type="submit" class="btn btn-lg btn-default">Save</button>
+                        <div class="form-group save">
+                            <button type="submit" class="btn btn-lg btn-success" ng-click="submit()">Save</button>
                         </div>
                     </form>
                 </div>
@@ -47,25 +44,40 @@
         </div>
     </div>
     <style>
+        .field-group .panel-body{
+            color: #000;
+        }
         .close{
             margin-top: 5px;
             margin-right: 5px;
-        }
-        .form--overlay .percentages {
-            padding: 0 0 20px 0;
-        }
-        .form--overlay .percentages .form-group input{
-            text-align: center;
-        }
-        .form--overlay .percentages .form-group{
-            width: 85px;
         }
         .form--overlay{
             position: fixed;
             bottom: 0;
             left: 0;
-            width: 100%;
+            width: 70%;
+            margin-left: 15%;
             padding: 0 100px;
+        }
+        .form--overlay .panel{
+            opacity: 1;
+        }
+        form .short-fields input {
+            float: left;
+        }
+        form .field-group{
+
+        }
+        form .field-group .percentage {
+            width: 50px;
+        }
+        form .part {
+            overflow: auto;
+            margin-bottom: 10px;
+        }
+        form .save,
+        form .save button{
+            width: 100%;
         }
     </style>
 </section>
