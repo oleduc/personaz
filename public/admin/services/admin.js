@@ -8,6 +8,11 @@ angular.module('mean.admin').factory('DynamicForm',[function(){
             short : [],
             long : [],
             links : []
+        },
+        result:{
+            action: null,
+            type: null,
+            value: null
         }
     }
 }]);

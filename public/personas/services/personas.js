@@ -11,7 +11,7 @@ angular.module('mean.personas').factory('Personas', ['$resource', function($reso
     });
 }]).factory('Alignments', ['$resource', function($resource) {
         return $resource('alignments/:alignmentId', {
-            personaId: '@_id'
+            elID: '@_id'
         }, {
             update: {
                 method: 'PUT'
@@ -19,7 +19,7 @@ angular.module('mean.personas').factory('Personas', ['$resource', function($reso
         });
     }]).factory('Inclinations', ['$resource', function($resource) {
         return $resource('inclinations/:inclinationId', {
-            personaId: '@_id'
+            elID: '@_id'
         }, {
             update: {
                 method: 'PUT'
@@ -27,7 +27,7 @@ angular.module('mean.personas').factory('Personas', ['$resource', function($reso
         });
     }]).factory('Rules', ['$resource', function($resource) {
         return $resource('rules/:rulesId', {
-            personaId: '@_id'
+            elID: '@_id'
         }, {
             update: {
                 method: 'PUT'
@@ -35,7 +35,7 @@ angular.module('mean.personas').factory('Personas', ['$resource', function($reso
         });
     }]).factory('Tasks', ['$resource', function($resource) {
         return $resource('tasks/:taskId', {
-            personaId: '@_id'
+            elID: '@_id'
         }, {
             update: {
                 method: 'PUT'
@@ -43,7 +43,7 @@ angular.module('mean.personas').factory('Personas', ['$resource', function($reso
         });
     }]).factory('Elements', ['$resource', function($resource) {
         return $resource('elements/:elementId', {
-            personaId: '@_id'
+            elID: '@_id'
         }, {
             update: {
                 method: 'PUT'

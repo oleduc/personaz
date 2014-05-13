@@ -47,6 +47,20 @@ exports.elements = {
             }
         });
     },
+    get: {
+        alignment   : function(req,res){
+            getElements(Alignment,{},res);
+        },
+        inclination : function(req,res){
+            getElements(Inclination,{},res);
+        },
+        rule        : function(req,res){
+            getElements(Rule,{},res);
+        },
+        task        : function(req,res){
+            getElements(Task,{},res);
+        }
+    },
     create : {
         alignment   : function(req,res){
             createElement(Alignment,req.body,res);
@@ -60,8 +74,44 @@ exports.elements = {
         task        : function(req,res){
             createElement(Task,req.body,res);
         }
+    },
+    delete : {
+        alignment   : function(req,res){
+            deleteElement(Alignment,req.query._id,res);
+        },
+        inclination : function(req,res){
+            deleteElement(Inclination,req.query._id,res);
+        },
+        rule        : function(req,res){
+            deleteElement(Rule,req.query._id,res);
+        },
+        task        : function(req,res){
+            deleteElement(Task,req.query._id,res);
+        }
     }
 };
+
+function getElements(Schema,by,res){
+    Schema.find(by,function(err,elements){
+        if(!err){
+            res.jsonp(elements);
+        } else {
+            res.send(500);
+        }
+    });
+}
+
+function deleteElement(Schema, id, res){
+    Schema.findByIdAndRemove(id,function(err){
+        if (err) {
+            return res.jsonp(500,{
+                errors: err.errors
+            });
+        } else {
+            res.send(200);
+        }
+    })
+}
 
 function createElement(Schema,document,res){
     var element = new Schema(document);

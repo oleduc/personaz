@@ -1,7 +1,7 @@
 <section data-ng-controller="AdminController" data-ng-init="fetch()">
     <div class="panel panel-default alignments">
         <div class="panel-heading">Alignments</div>
-        <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('alignment')"></span>
+        <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('alignments')"></span>
         <div class="panel-body">
             <table class="table">
                 <thead>
@@ -17,7 +17,7 @@
                     <td class="number">{{$index + 1}}</td>
                     <td class="title">{{alignment.name}}</td>
                     <td class="description">{{alignment.description}}</td>
-                    <td class="delete"><span class="glyphicon glyphicon-trash"></span></td>
+                    <td class="delete"><span class="glyphicon glyphicon-trash" ng-click="deleteElement('alignments',alignment._id)"></span></td>
                 </tr>
                 </tbody>
             </table>
@@ -25,7 +25,7 @@
     </div>
     <div class="panel panel-default inclinations" >
         <div class="panel-heading">Inclinations</div>
-        <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('inclination')"></span>
+        <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('inclinations')"></span>
         <div class="panel-body">
             <table class="table">
                 <thead>
@@ -41,7 +41,7 @@
                     <td class="number">{{$index + 1}}</td>
                     <td class="title">{{inclination.name}}</td>
                     <td class="description">{{inclination.description}}</td>
-                    <td><span class="glyphicon glyphicon-trash"></span></td>
+                    <td class="delete"><span class="glyphicon glyphicon-trash" ng-click="deleteElement('inclinations',inclination._id)"></span></td>
                 </tr>
                 </tbody>
             </table>
@@ -49,14 +49,14 @@
     </div>
     <div class="panel panel-default rules" style="clear: both;">
         <div class="panel-heading">Rules</div>
-        <span class="glyphicon glyphicon-plus add--element"></span>
+        <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('rules')"></span>
         <div class="panel-body">
 
         </div>
     </div>
     <div class="panel panel-default tasks" style="clear: both;">
         <div class="panel-heading">Tasks</div>
-        <span class="glyphicon glyphicon-plus add--element"></span>
+        <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('tasks')"></span>
         <div class="panel-body">
         </div>
     </div>

@@ -1,63 +1,124 @@
 'use strict';
 
 angular.module('mean.admin')
-    .controller('AdminController', ['$scope','$stateParams','Global','DynamicForm','Elements','Alignments', function ($scope,$stateParams,Global,DynamicForm,Elements,Alignments) {
-        console.log('Admin Controller');
-        $scope.global = Global;
-        $scope.alignments = [];
-        $scope.inclinations = [];
-        $scope.rules = [];
-        $scope.tasks = [];
+    .controller('AdminController', [
+        '$scope',
+        '$stateParams',
+        'Global',
+        'DynamicForm',
+        'Elements',
+        'Alignments',
+        'Inclinations',
+        'Rules',
+        'Tasks',
+        function ($scope,$stateParams,Global,DynamicForm,Elements,Alignments,Inclinations,Rules,Tasks) {
+            console.log('Admin Controller');
+            $scope.global = Global;
+            $scope.form = DynamicForm;
 
-        $scope.showForm = function(type){
-            DynamicForm.type = type;
-            DynamicForm.visible = true;
-        };
+            $scope.alignments = [];
+            $scope.inclinations = [];
+            $scope.rules = [];
+            $scope.tasks = [];
 
-        $scope.fetch = function(){
-            Elements.query(function(elements) {
-                $scope.alignments = elements[0];
+            $scope.showForm = function(type){
+                $scope.form.type = type;
+                $scope.form.visible = true;
+            };
+
+            $scope.$watch('form.result.value',function(){
+                if($scope.form.result.action == 'add'){
+                    console.log($scope[$scope.form.type]);
+                    $scope[$scope.form.type].push($scope.form.result.value);
+                }
             });
-        };
 
-        $scope.findAlignments = function(){
-            Alignments.query(function(alignments){
-                $scope.alignments = alignments;
-            });
-        };
+            $scope.deleteElement = function(type,_id){
+                var Resource = null;
+                switch (type){
+                    case 'alignments':
+                        Resource = Alignments;
+                    break;
+                    case 'inclinations':
+                        Resource = Inclinations;
+                    break;
+                    case 'rules':
+                        Resource = Rules;
+                    break;
+                    case 'tasks':
+                        Resource = Tasks;
+                    break;
+                }
+                for(index in $scope[type]){
+                    if($scope[type][index]._id == _id){
+                        $scope[type][index].$delete({_id:_id});
+                        $scope[type].splice(index,1);
+                    }
+                }
+            };
 
-        $scope.findInclinations = function(){
+            $scope.fetch = function(){
+                Alignments.query(function(alignments) {
+                    $scope.alignments = alignments;
+                });
+                Inclinations.query(function(inclinations) {
+                    $scope.inclinations = inclinations;
+                });
+            };
 
-        };
-        $scope.findRules = function(){
+            $scope.fetchElements = function(){
+                Elements.query(function(elements) {
+                    elements.push({});
+                    console.log(elements);
+                    $scope.alignments = elements[0];
+                    $scope.inclinations = elements[1];
+                });
+            };
 
-        };
-        $scope.findTasks = function(){
+            $scope.findAlignments = function(){
+                Alignments.query(function(alignments){
+                    $scope.alignments = alignments;
+                });
+            };
 
-        };
+            $scope.findInclinations = function(){
+
+            };
+            $scope.findRules = function(){
+
+            };
+            $scope.findTasks = function(){
+
+            };
     }])
     .controller('AdminFormController', ['$scope','$stateParams','Global','DynamicForm','Alignments', 'Inclinations', function ($scope,$stateParams,Global,DynamicForm,Alignments,Inclinations) {
         //Generic form controller
         console.log('AdminFormController');
 
         var Resource = null;
+        var type = null;
+
         $scope.global = Global;
         $scope.form = DynamicForm;
 
         $scope.$watch('form.type',function(type){
             switch(type){
-                case 'alignment':
+                case 'alignments':
                     Resource = Alignments;
+                    type = 'alignments';
                     $scope.form.fields.short = [
                         {name:'name',type:'text',placeholder:'Name of the alignment'},
                         {name:'color',type:'text',placeholder:'Color of the alignment'}
                     ];
                     $scope.form.fields.long = [{name:'description',rows:2,placeholder:'Description of the alignment'}];
                 break;
-                case 'inclination':
+                case 'inclinations':
                     Resource = Inclinations;
                     $scope.form.fields.short = [{name:'name',type:'text',placeholder:'Name of the inclination'}];
                     $scope.form.fields.long = [{name:'description',rows:2,placeholder:'Description of the inclination'}];
+                break;
+                case 'rules':
+                    
                 break;
             }
         });
@@ -72,8 +133,11 @@ angular.module('mean.admin')
             }
            if(Resource){
                var resource = new Resource(models);
-               resource.$save(function(response) {
-                   console.log(response);
+               resource.$save(function(element) {
+                   $scope.form.result = {
+                       action : 'add',
+                       value : element
+                   };
                });
            }
         };
