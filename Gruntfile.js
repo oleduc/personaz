@@ -63,7 +63,8 @@ module.exports = function(grunt) {
             all: {
                 src: paths.js,
                 options: {
-                    jshintrc: true
+                    jshintrc: true,
+                    latedef:'nofunc'
                 }
             }
         },

@@ -28,7 +28,7 @@ angular.module('mean.admin')
             };
 
             $scope.$watch('form.result.value',function(){
-                if($scope.form.result.action == 'add'){
+                if($scope.form.result.action === 'add'){
                     $scope[$scope.form.type].push($scope.form.result.value);
                 }
                 DynamicForm.reset();
@@ -50,8 +50,8 @@ angular.module('mean.admin')
                         Resource = Tasks;
                     break;
                 }
-                for(index in $scope[type]){
-                    if($scope[type][index]._id == _id){
+                for(var index in $scope[type]){
+                    if($scope[type][index]._id === _id){
                         $scope[type][index].$delete({_id:_id});
                         $scope[type].splice(index,1);
                     }
@@ -97,7 +97,6 @@ angular.module('mean.admin')
         console.log('AdminFormController');
 
         var Resource = null;
-        var type = null;
 
         $scope.global = Global;
         $scope.form = DynamicForm;
@@ -106,7 +105,6 @@ angular.module('mean.admin')
             switch(type){
                 case 'alignments':
                     Resource = Alignments;
-                    type = 'alignments';
                     $scope.form.fields.short = [
                         {name:'name',type:'text',placeholder:'Name of the alignment'},
                         {name:'color',type:'text',placeholder:'Color of the alignment'}
@@ -146,15 +144,13 @@ angular.module('mean.admin')
             }
            if(Resource){
                var resource = new Resource(models);
-               console.log(models);
-               /*
+
                resource.$save(function(element) {
                    $scope.form.result = {
                        action : 'add',
                        value : element
                    };
                });
-               */
            }
         };
 

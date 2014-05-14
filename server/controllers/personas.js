@@ -9,7 +9,6 @@ var mongoose = require('mongoose'),
     Rule = mongoose.model('Rule'),
     Task = mongoose.model('Task');
 
-
 /**
  * Find article by id
  */
@@ -91,6 +90,7 @@ exports.elements = {
     }
 };
 
+/*jslint latedef:false*/
 function getElements(Schema,by,res){
     Schema.find(by,function(err,elements){
         if(!err){
@@ -110,7 +110,7 @@ function deleteElement(Schema, id, res){
         } else {
             res.send(200);
         }
-    })
+    });
 }
 
 function createElement(Schema,document,res){
