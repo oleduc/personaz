@@ -21,6 +21,18 @@ angular.module('mean.admin')
             $scope.rules = [];
             $scope.tasks = [];
 
+            $scope.getFieldByID = function(type,field,_id){
+                var result = null;
+                $scope[type].every(function(element){
+                    if(element._id === _id ){
+                        result = element[field];
+                        return false;
+                    }
+                    return true;
+                });
+                return result;
+            };
+
             $scope.showForm = function(type){
                 DynamicForm.reset();
                 $scope.form.type = type;
@@ -35,21 +47,6 @@ angular.module('mean.admin')
             });
 
             $scope.deleteElement = function(type,_id){
-                var Resource = null;
-                switch (type){
-                    case 'alignments':
-                        Resource = Alignments;
-                    break;
-                    case 'inclinations':
-                        Resource = Inclinations;
-                    break;
-                    case 'rules':
-                        Resource = Rules;
-                    break;
-                    case 'tasks':
-                        Resource = Tasks;
-                    break;
-                }
                 for(var index in $scope[type]){
                     if($scope[type][index]._id === _id){
                         $scope[type][index].$delete({_id:_id});
@@ -64,6 +61,13 @@ angular.module('mean.admin')
                 });
                 Inclinations.query(function(inclinations) {
                     $scope.inclinations = inclinations;
+                });
+                Rules.query(function(rules) {
+                    console.log(rules);
+                    $scope.rules = rules;
+                });
+                Tasks.query(function(tasks) {
+                    $scope.tasks = tasks;
                 });
             };
 
@@ -91,6 +95,25 @@ angular.module('mean.admin')
             $scope.findTasks = function(){
 
             };
+
+            function getResourceByType(type){
+                var Resource = null;
+                switch (type){
+                    case 'alignments':
+                        Resource = Alignments;
+                        break;
+                    case 'inclinations':
+                        Resource = Inclinations;
+                        break;
+                    case 'rules':
+                        Resource = Rules;
+                        break;
+                    case 'tasks':
+                        Resource = Tasks;
+                        break;
+                }
+                return Resource;
+            }
     }])
     .controller('AdminFormController', ['$scope','$stateParams','Global','DynamicForm','Alignments', 'Inclinations','Rules', function ($scope,$stateParams,Global,DynamicForm,Alignments,Inclinations,Rules) {
         //Generic form controller
@@ -134,14 +157,41 @@ angular.module('mean.admin')
             }
         });
 
+        /**
+         * Generic form submit button
+         * Will extract models from form object and send to server then update DynamicForm service.
+         */
         $scope.submit = function(){
             var models = {};
+            //Loop all form files to extract only the proper values to be sent to the server (To limit traffic)
+            for(var fType in $scope.form.fields){
+                if($scope.form.fields.hasOwnProperty(fType)){
 
-            for(var fieldType in $scope.form.fields){
-                for(var field in $scope.form.fields[fieldType]){
-                    models[$scope.form.fields[fieldType][field].name] = $scope.form.fields[fieldType][field].model;
+                    //Second level, contains either field object or array of field object
+                    $scope.form.fields[fType].forEach(function(object){
+                        if(!object.hasOwnProperty('fields')){
+
+                            //object is field object, add to models object
+                            models[object.name] = object.model;
+
+                        } else if (typeof object.fields == 'object'){
+                            var name = object.name.toLowerCase();
+                            //object is array of field objects
+                            models[name] = [];
+                            object.fields.forEach(function(fieldObj){
+                                //fieldObj is added to models object
+                                models[name].push({_id:fieldObj._id,chances:fieldObj.model});
+                            });
+                        } else {
+                            throw new Exception('Trying to iterate "$scope.form.fields[fType]", but "object" lacks property "fields" or object.fields is not object');
+                        }
+                    });
+
+                } else {
+                    throw new Exception('Trying to iterate "$scope.form.fields", but lacks property in "fType"');
                 }
             }
+
            if(Resource){
                var resource = new Resource(models);
 

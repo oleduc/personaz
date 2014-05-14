@@ -51,7 +51,28 @@
         <div class="panel-heading">Rules</div>
         <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('rules')"></span>
         <div class="panel-body">
-
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th data-ng-repeat="alignment in alignments" class="{{alignment.color}}">{{alignment.name}}</th>
+                    <th data-ng-repeat="inclination in inclinations">{{inclination.name}}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="rule in rules">
+                    <td class="number">{{$index + 1}}</td>
+                    <td class="title">{{rule.name}}</td>
+                    <td class="description">{{rule.description}}</td>
+                    <td data-ng-repeat="alignment in rule.alignments" class="centered {{getFieldByID('alignments','color',alignment._id)}}">{{alignment.chances}}%</td>
+                    <td data-ng-repeat="inclination in rule.inclinations" class="centered">{{inclination.chances}}%</td>
+                    <td class="delete"><span class="glyphicon glyphicon-trash" ng-click="deleteElement('inclinations',inclination._id)"></span></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="panel panel-default tasks" style="clear: both;">
@@ -109,13 +130,17 @@
         .table tr {
             position: relative;
         }
-        .table tr.green{
+        .table .centered{
+            text-align: center;
+            vertical-align: middle;
+        }
+        .table .green{
             background-color: #dff0d8;
         }
-        .table tr.yellow{
+        .table .yellow{
             background-color: #fcf8e3;
         }
-        .table tr.red{
+        .table .red{
             background-color: #f2dede;
         }
     </style>

@@ -25,12 +25,12 @@ var RuleSchema = new Schema({
         trim: true
     },
     alignments: [{
-        id : String,
-        chance : Number
+        _id : String,
+        chances : Number
     }],
     inclinations: [{
-        id : String,
-        chance : Number
+        _id : String,
+        chances : Number
     }]
 });
 
