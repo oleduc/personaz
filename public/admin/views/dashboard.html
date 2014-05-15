@@ -1,4 +1,5 @@
 <section data-ng-controller="AdminController" data-ng-init="fetch()">
+
     <div class="panel panel-default alignments">
         <div class="panel-heading">Alignments</div>
         <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('alignments')"></span>
@@ -6,7 +7,6 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>#</th>
                     <th>Alignment</th>
                     <th>Description</th>
                     <th></th>
@@ -14,7 +14,6 @@
                 </thead>
                 <tbody>
                 <tr data-ng-repeat="alignment in alignments" class="{{alignment.color}}">
-                    <td class="number">{{$index + 1}}</td>
                     <td class="title">{{alignment.name}}</td>
                     <td class="description">{{alignment.description}}</td>
                     <td class="delete"><span class="glyphicon glyphicon-trash" ng-click="deleteElement('alignments',alignment._id)"></span></td>
@@ -23,6 +22,7 @@
             </table>
         </div>
     </div>
+
     <div class="panel panel-default inclinations" >
         <div class="panel-heading">Inclinations</div>
         <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('inclinations')"></span>
@@ -30,7 +30,6 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>#</th>
                     <th>Inclination</th>
                     <th>Description</th>
                     <th></th>
@@ -38,7 +37,6 @@
                 </thead>
                 <tbody>
                 <tr data-ng-repeat="inclination in inclinations" class="{{alignment.color}}">
-                    <td class="number">{{$index + 1}}</td>
                     <td class="title">{{inclination.name}}</td>
                     <td class="description">{{inclination.description}}</td>
                     <td class="delete"><span class="glyphicon glyphicon-trash" ng-click="deleteElement('inclinations',inclination._id)"></span></td>
@@ -47,6 +45,7 @@
             </table>
         </div>
     </div>
+
     <div class="panel panel-default rules" style="clear: both;">
         <div class="panel-heading">Rules</div>
         <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('rules')"></span>
@@ -57,8 +56,10 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th data-ng-repeat="alignment in alignments" class="{{alignment.color}}">{{alignment.name}}</th>
-                    <th data-ng-repeat="inclination in inclinations">{{inclination.name}}</th>
+                    <th data-ng-repeat="alignment in alignments" class="{{alignment.color}} centered ">
+                        {{alignment.name}}
+                    </th>
+                    <th data-ng-repeat="inclination in inclinations" class="centered blue">{{inclination.name}}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -67,21 +68,62 @@
                     <td class="number">{{$index + 1}}</td>
                     <td class="title">{{rule.name}}</td>
                     <td class="description">{{rule.description}}</td>
-                    <td data-ng-repeat="alignment in rule.alignments" class="centered {{getFieldByID('alignments','color',alignment._id)}}">{{alignment.chances}}%</td>
-                    <td data-ng-repeat="inclination in rule.inclinations" class="centered">{{inclination.chances}}%</td>
-                    <td class="delete"><span class="glyphicon glyphicon-trash" ng-click="deleteElement('inclinations',inclination._id)"></span></td>
+                    <td data-ng-repeat="alignment in alignments" class="centered {{alignment.color}}">
+                        {{0+getValueFromObjectInArray(rule.alignments,'_id',alignment._id,'chances')}}%
+                    </td>
+                    <td data-ng-repeat="inclination in inclinations" class="centered blue">
+                        {{0+getValueFromObjectInArray(rule.inclinations,'_id',inclination._id,'chances')}}%
+                    </td>
+                    <td class="delete">
+                        <span class="glyphicon glyphicon-trash" ng-click="deleteElement('rules',rule._id)"></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
     <div class="panel panel-default tasks" style="clear: both;">
         <div class="panel-heading">Tasks</div>
         <span class="glyphicon glyphicon-plus add--element" ng-click="showForm('tasks')"></span>
         <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Description</th>
+                    <th data-ng-repeat="alignment in alignments" class="{{alignment.color}} centered ">
+                        {{alignment.name}}
+                    </th>
+                    <th data-ng-repeat="inclination in inclinations" class="centered blue">{{inclination.name}}</th>
+                    <th data-ng-repeat="rule in rules" class="centered">{{rule.name}}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="task in tasks">
+                    <td class="number">{{$index + 1}}</td>
+                    <td class="description">{{task.description}}</td>
+                    <td data-ng-repeat="alignment in alignments" class="centered {{alignment.color}}">
+                        {{0+getValueFromObjectInArray(task.alignments,'_id',alignment._id,'chances')}}%
+                    </td>
+                    <td data-ng-repeat="inclination in inclinations" class="centered blue">
+                        {{0+getValueFromObjectInArray(task.inclinations,'_id',inclination._id,'chances')}}%
+                    </td>
+                    <td data-ng-repeat="rule in rules" class="centered">
+                        {{0+getValueFromObjectInArray(task.rules,'_id',rule._id,'chances')}}%
+                    </td>
+                    <td class="delete">
+                        <span class="glyphicon glyphicon-trash" ng-click="deleteElement('tasks',task._id)"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+
     <div ng-include src="'public/admin/views/form.html'"></div>
+
     <style>
         .panel{
             position: relative;
@@ -122,7 +164,11 @@
         .table td.title,
         .table td.number,
         .table td.delete{
+            font-weight: bold;
             vertical-align: middle;
+        }
+        .table td.description{
+            max-width: 40%;
         }
         .table td.delete{
             color: #ac2925;
@@ -142,6 +188,9 @@
         }
         .table .red{
             background-color: #f2dede;
+        }
+        .table .blue{
+            background-color: #A0C5E4;
         }
     </style>
 </section>

@@ -1,0 +1,67 @@
+.panel{
+    position: relative;
+    opacity: 0.9;
+}
+.alignments .panel-body,
+.inclinations .panel-body,
+.rules .panel-body,
+.tasks .panel-body{
+    padding: 0;
+}
+.panel table{
+    color: #000;
+}
+.panel .add--element{
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    color:#d3d3d3;
+    font-weight: 100;
+    font-size: 20px;
+}
+.panel .add--element:hover{
+    color:#333333;
+}
+.panel.alignments{
+    width: 49%;
+    float: left;
+}
+.panel.inclinations{
+    width: 49%;
+    float: left;
+    margin-left: 2%;
+}
+.table{
+    margin-bottom: 0;
+}
+.table td.title,
+.table td.number,
+.table td.delete{
+    font-weight: bold;
+    vertical-align: middle;
+}
+.table td.description{
+    max-width: 40%;
+}
+.table td.delete{
+    color: #ac2925;
+}
+.table tr {
+    position: relative;
+}
+.table .centered{
+    text-align: center;
+    vertical-align: middle;
+}
+.table .green{
+    background-color: #dff0d8;
+}
+.table .yellow{
+    background-color: #fcf8e3;
+}
+.table .red{
+    background-color: #f2dede;
+}
+.table .blue{
+    background-color: #428bca;
+}

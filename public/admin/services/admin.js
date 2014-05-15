@@ -1,20 +1,19 @@
 'use strict';
-console.log('YUNOIRAN');
+
 angular.module('mean.admin').factory('DynamicForm',[function(){
     var that =  {
         reset : function(){
-            that.visible= false;
-            that.type = '';
-            that.fields = {
-                short : [],
-                long : [],
-                links : []
-            };
-            that.result = {
+            this.type = null;
+            this.fields = {};
+            this.fields.short = [];
+            this.fields.long = [];
+            this.fields.links = [];
+            this.result = {
                 action: null,
-                    type: null,
-                    value: null
+                type: null,
+                value: null
             };
+            this.visible = false;
         }
     };
     that.reset();

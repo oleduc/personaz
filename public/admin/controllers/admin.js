@@ -21,6 +21,18 @@ angular.module('mean.admin')
             $scope.rules = [];
             $scope.tasks = [];
 
+            $scope.getValueFromObjectInArray = function(array,searchProperty,searchValue,property){
+                var result = null;
+                array.every(function(object){
+                    if(object[searchProperty] === searchValue){
+                        result = object[property];
+                        return false;
+                    }
+                    return true;
+                });
+                return result;
+            };
+
             $scope.getFieldByID = function(type,field,_id){
                 var result = null;
                 $scope[type].every(function(element){
@@ -34,16 +46,17 @@ angular.module('mean.admin')
             };
 
             $scope.showForm = function(type){
-                DynamicForm.reset();
-                $scope.form.type = type;
+                if($scope.form.type != type){
+                    $scope.form.type = type;
+                }
                 $scope.form.visible = true;
             };
 
             $scope.$watch('form.result.value',function(){
                 if($scope.form.result.action === 'add'){
                     $scope[$scope.form.type].push($scope.form.result.value);
+                    $scope.form.reset();
                 }
-                DynamicForm.reset();
             });
 
             $scope.deleteElement = function(type,_id){
@@ -63,64 +76,18 @@ angular.module('mean.admin')
                     $scope.inclinations = inclinations;
                 });
                 Rules.query(function(rules) {
-                    console.log(rules);
                     $scope.rules = rules;
                 });
                 Tasks.query(function(tasks) {
                     $scope.tasks = tasks;
                 });
             };
-
-            $scope.fetchElements = function(){
-                Elements.query(function(elements) {
-                    elements.push({});
-                    console.log(elements);
-                    $scope.alignments = elements[0];
-                    $scope.inclinations = elements[1];
-                });
-            };
-
-            $scope.findAlignments = function(){
-                Alignments.query(function(alignments){
-                    $scope.alignments = alignments;
-                });
-            };
-
-            $scope.findInclinations = function(){
-
-            };
-            $scope.findRules = function(){
-
-            };
-            $scope.findTasks = function(){
-
-            };
-
-            function getResourceByType(type){
-                var Resource = null;
-                switch (type){
-                    case 'alignments':
-                        Resource = Alignments;
-                        break;
-                    case 'inclinations':
-                        Resource = Inclinations;
-                        break;
-                    case 'rules':
-                        Resource = Rules;
-                        break;
-                    case 'tasks':
-                        Resource = Tasks;
-                        break;
-                }
-                return Resource;
-            }
     }])
-    .controller('AdminFormController', ['$scope','$stateParams','Global','DynamicForm','Alignments', 'Inclinations','Rules', function ($scope,$stateParams,Global,DynamicForm,Alignments,Inclinations,Rules) {
+    .controller('AdminFormController', ['$scope','$stateParams','Global','DynamicForm','Alignments', 'Inclinations','Rules','Tasks', function ($scope,$stateParams,Global,DynamicForm,Alignments,Inclinations,Rules,Tasks) {
         //Generic form controller
         console.log('AdminFormController');
 
         var Resource = null;
-
         $scope.global = Global;
         $scope.form = DynamicForm;
 
@@ -144,14 +111,17 @@ angular.module('mean.admin')
                     $scope.form.fields.short = [{name:'name',type:'text',placeholder:'Name of the rule'}];
                     $scope.form.fields.long = [{name:'description',rows:2,placeholder:'Description of the rule'}];
                     $scope.form.fields.links = [
-                        {
-                            name:'Alignments',
-                            fields: $scope.$parent.alignments
-                        },
-                        {
-                            name:'Inclinations',
-                            fields: $scope.$parent.inclinations
-                        }
+                        { name:'Alignments', fields: $scope.$parent.alignments},
+                        { name:'Inclinations', fields: $scope.$parent.inclinations}
+                    ];
+                break;
+                case 'tasks':
+                    Resource = Tasks;
+                    $scope.form.fields.long = [{name:'description',rows:2,placeholder:'Description of the task'}];
+                    $scope.form.fields.links = [
+                        { name:'Alignments', fields: $scope.$parent.alignments },
+                        { name:'Inclinations', fields: $scope.$parent.inclinations },
+                        { name:'Rules', fields: $scope.$parent.rules }
                     ];
                 break;
             }
@@ -191,7 +161,6 @@ angular.module('mean.admin')
                     throw new Exception('Trying to iterate "$scope.form.fields", but lacks property in "fType"');
                 }
             }
-
            if(Resource){
                var resource = new Resource(models);
 
@@ -205,6 +174,6 @@ angular.module('mean.admin')
         };
 
         $scope.closeForm = function(){
-            DynamicForm.reset();
+            $scope.form.visible = false;
         };
     }]);

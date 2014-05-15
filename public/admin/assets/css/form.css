@@ -1,0 +1,49 @@
+.close{
+    margin-top: 5px;
+    margin-right: 5px;
+}
+.form--overlay{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 70%;
+    margin-left: 15%;
+    padding: 0 100px;
+}
+.form--overlay .panel{
+    opacity: 1;
+}
+.form--overlay .panel-body{
+    padding-top: 10px;
+    padding-bottom: 0;
+}
+.form--overlay .part.panel{
+    font-weight: bold;
+    color: #808080;
+    text-transform: uppercase;
+}
+.form--overlay td input{
+    display: inline-block;
+}
+.form--overlay tr,
+.form--overlay th,
+.form--overlay td input{
+    text-align: center;
+}
+form .short-fields input {
+    float: left;
+}
+form .field-group{
+
+}
+form .field-group .percentage {
+    width: 50px;
+}
+form .part {
+    overflow: auto;
+    margin-bottom: 10px;
+}
+form .save,
+form .save button{
+    width: 100%;
+}
