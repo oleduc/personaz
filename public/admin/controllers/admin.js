@@ -100,11 +100,13 @@ angular.module('mean.admin')
                         {name:'color',type:'text',placeholder:'Color of the alignment'}
                     ];
                     $scope.form.fields.long = [{name:'description',rows:2,placeholder:'Description of the alignment'}];
+                    $scope.form.fields.links = [];
                 break;
                 case 'inclinations':
                     Resource = Inclinations;
                     $scope.form.fields.short = [{name:'name',type:'text',placeholder:'Name of the inclination'}];
                     $scope.form.fields.long = [{name:'description',rows:2,placeholder:'Description of the inclination'}];
+                    $scope.form.fields.links = [];
                 break;
                 case 'rules':
                     Resource = Rules;
@@ -134,7 +136,28 @@ angular.module('mean.admin')
         $scope.submit = function(){
             var models = {};
 
-            var handleFieldObject = function(object){
+            //Loop all form files to extract only the proper values to be sent to the server (To limit traffic)
+            for(var fType in $scope.form.fields){
+                if($scope.form.fields.hasOwnProperty(fType)){
+
+                    //Second level, contains either field object or array of field object
+                    $scope.form.fields[fType].forEach(iterateFieldObject);
+
+                } else {
+                    throw 'Trying to iterate "$scope.form.fields", but lacks property in "fType"';
+                }
+            }
+            if(Resource){
+                var resource = new Resource(models);
+
+                resource.$save(function(element) {
+                    $scope.form.result = {
+                        action : 'add',
+                        value : element
+                    };
+                });
+            }
+            function iterateFieldObject(object){
                 if(!object.hasOwnProperty('fields')){
 
                     //object is field object, add to models object
@@ -151,29 +174,7 @@ angular.module('mean.admin')
                 } else {
                     throw 'Trying to iterate "$scope.form.fields[fType]", but "object" lacks property "fields" or object.fields is not object';
                 }
-            };
-
-            //Loop all form files to extract only the proper values to be sent to the server (To limit traffic)
-            for(var fType in $scope.form.fields){
-                if($scope.form.fields.hasOwnProperty(fType)){
-
-                    //Second level, contains either field object or array of field object
-                    $scope.form.fields[fType].forEach(handleFieldObject);
-
-                } else {
-                    throw 'Trying to iterate "$scope.form.fields", but lacks property in "fType"';
-                }
             }
-           if(Resource){
-               var resource = new Resource(models);
-
-               resource.$save(function(element) {
-                   $scope.form.result = {
-                       action : 'add',
-                       value : element
-                   };
-               });
-           }
         };
 
         $scope.closeForm = function(){
