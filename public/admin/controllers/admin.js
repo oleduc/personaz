@@ -46,7 +46,7 @@ angular.module('mean.admin')
             };
 
             $scope.showForm = function(type){
-                if($scope.form.type != type){
+                if($scope.form.type !== type){
                     $scope.form.type = type;
                 }
                 $scope.form.visible = true;
@@ -133,32 +133,35 @@ angular.module('mean.admin')
          */
         $scope.submit = function(){
             var models = {};
+
+            var handleFieldObject = function(object){
+                if(!object.hasOwnProperty('fields')){
+
+                    //object is field object, add to models object
+                    models[object.name] = object.model;
+
+                } else if (typeof object.fields === 'object'){
+                    var name = object.name.toLowerCase();
+                    //object is array of field objects
+                    models[name] = [];
+                    object.fields.forEach(function(fieldObj){
+                        //fieldObj is added to models object
+                        models[name].push({_id:fieldObj._id,chances:fieldObj.model});
+                    });
+                } else {
+                    throw 'Trying to iterate "$scope.form.fields[fType]", but "object" lacks property "fields" or object.fields is not object';
+                }
+            };
+
             //Loop all form files to extract only the proper values to be sent to the server (To limit traffic)
             for(var fType in $scope.form.fields){
                 if($scope.form.fields.hasOwnProperty(fType)){
 
                     //Second level, contains either field object or array of field object
-                    $scope.form.fields[fType].forEach(function(object){
-                        if(!object.hasOwnProperty('fields')){
-
-                            //object is field object, add to models object
-                            models[object.name] = object.model;
-
-                        } else if (typeof object.fields == 'object'){
-                            var name = object.name.toLowerCase();
-                            //object is array of field objects
-                            models[name] = [];
-                            object.fields.forEach(function(fieldObj){
-                                //fieldObj is added to models object
-                                models[name].push({_id:fieldObj._id,chances:fieldObj.model});
-                            });
-                        } else {
-                            throw new Exception('Trying to iterate "$scope.form.fields[fType]", but "object" lacks property "fields" or object.fields is not object');
-                        }
-                    });
+                    $scope.form.fields[fType].forEach(handleFieldObject);
 
                 } else {
-                    throw new Exception('Trying to iterate "$scope.form.fields", but lacks property in "fType"');
+                    throw 'Trying to iterate "$scope.form.fields", but lacks property in "fType"';
                 }
             }
            if(Resource){
