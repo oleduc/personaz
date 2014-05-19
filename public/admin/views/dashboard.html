@@ -69,10 +69,10 @@
                     <td class="title">{{rule.name}}</td>
                     <td class="description">{{rule.description}}</td>
                     <td data-ng-repeat="alignment in alignments" class="centered {{alignment.color}}">
-                        {{0+getValueFromObjectInArray(rule.alignments,'_id',alignment._id,'chances')}}%
+                        {{0+getValueFromObjectInArray(rule.conditions.alignments,'_id',alignment._id,'chances')}}%
                     </td>
                     <td data-ng-repeat="inclination in inclinations" class="centered blue">
-                        {{0+getValueFromObjectInArray(rule.inclinations,'_id',inclination._id,'chances')}}%
+                        {{0+getValueFromObjectInArray(rule.conditions.inclinations,'_id',inclination._id,'chances')}}%
                     </td>
                     <td class="delete">
                         <span class="glyphicon glyphicon-trash" ng-click="deleteElement('rules',rule._id)"></span>
@@ -105,13 +105,13 @@
                     <td class="number">{{$index + 1}}</td>
                     <td class="description">{{task.description}}</td>
                     <td data-ng-repeat="alignment in alignments" class="centered {{alignment.color}}">
-                        {{0+getValueFromObjectInArray(task.alignments,'_id',alignment._id,'chances')}}%
+                        {{0+getValueFromObjectInArray(task.conditions.alignments,'_id',alignment._id,'chances')}}%
                     </td>
                     <td data-ng-repeat="inclination in inclinations" class="centered blue">
-                        {{0+getValueFromObjectInArray(task.inclinations,'_id',inclination._id,'chances')}}%
+                        {{0+getValueFromObjectInArray(task.conditions.inclinations,'_id',inclination._id,'chances')}}%
                     </td>
                     <td data-ng-repeat="rule in rules" class="centered">
-                        {{0+getValueFromObjectInArray(task.rules,'_id',rule._id,'chances')}}%
+                        {{0+getValueFromObjectInArray(task.conditions.rules,'_id',rule._id,'chances')}}%
                     </td>
                     <td class="delete">
                         <span class="glyphicon glyphicon-trash" ng-click="deleteElement('tasks',task._id)"></span>

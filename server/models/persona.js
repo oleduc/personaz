@@ -6,8 +6,14 @@
 /**
  * Module dependencies.
  */
+require('./alignment');
+require('./inclination');
+require('./rule');
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    Alignment = mongoose.model('Alignment'),
+    Inclination = mongoose.model('Inclination'),
+    Rule = mongoose.model('Rule');
 
 
 /**
@@ -20,20 +26,16 @@ var PersonaSchema = new Schema({
         trim: true
     },
     alignments: [{
-        id : String,
-        chance : Number
+        id : String
     }],
     inclinations: [{
-        id : String,
-        chance : Number
+        id : String
     }],
     rules: [{
-        id : String,
-        chance : Number
+        id : String
     }],
     tasks: [{
-        id : String,
-        chance : Number
+        id : String
     }],
     user: {
         id: {
@@ -42,4 +44,18 @@ var PersonaSchema = new Schema({
     }
 });
 
+PersonaSchema.methods.generate = function(callback){
+    console.log(Rule);
+};
+
+PersonaSchema.methods.drawElement = function(Schema,conditions,callback){
+    if(conditions){
+
+    } else {
+
+    }
+};
+
 mongoose.model('Persona', PersonaSchema);
+
+function getRandMax(max){return Math.floor((Math.random() * max) + 1)};

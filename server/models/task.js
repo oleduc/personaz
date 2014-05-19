@@ -19,18 +19,20 @@ var TaskSchema = new Schema({
         default: '',
         trim: true
     },
-    alignments: [{
-        id : String,
-        chances : Number
-    }],
-    inclinations: [{
-        _id : String,
-        chances : Number
-    }],
-    rules: [{
-        _id : String,
-        chances : Number
-    }]
+    conditions: {
+        alignments: [{
+            id : String,
+            chances : Number
+        }],
+        inclinations: [{
+            _id : String,
+            chances : Number
+        }],
+        rules: [{
+            _id : String,
+            chances : Number
+        }]
+    }
 });
 
 /**

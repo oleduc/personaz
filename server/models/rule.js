@@ -24,14 +24,16 @@ var RuleSchema = new Schema({
         default: '',
         trim: true
     },
-    alignments: [{
-        _id : String,
-        chances : Number
-    }],
-    inclinations: [{
-        _id : String,
-        chances : Number
-    }]
+    conditions: {
+        alignments: [{
+            _id : String,
+            chances : Number
+        }],
+        inclinations: [{
+            _id : String,
+            chances : Number
+        }]
+    }
 });
 
 /**

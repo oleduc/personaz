@@ -4,6 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+    Persona = mongoose.model('Persona'),
     Alignment = mongoose.model('Alignment'),
     Inclination = mongoose.model('Inclination'),
     Rule = mongoose.model('Rule'),
@@ -46,18 +47,32 @@ exports.elements = {
             }
         });
     },
-    get: {
-        alignment   : function(req,res){
+    query: {
+        alignments   : function(req,res){
             getElements(Alignment,{},res);
         },
-        inclination : function(req,res){
+        inclinations : function(req,res){
             getElements(Inclination,{},res);
         },
-        rule        : function(req,res){
+        rules        : function(req,res){
             getElements(Rule,{},res);
         },
-        task        : function(req,res){
+        tasks        : function(req,res){
             getElements(Task,{},res);
+        }
+    },
+    get    : {
+        persona     : function(req,res){
+            if(req.query._id){
+
+            } else {
+                var persona = new Persona();
+                persona.generate(function(err){
+                    if(!err){
+                        res.jsonp(persona);
+                    }
+                });
+            }
         }
     },
     create : {

@@ -24,10 +24,12 @@ var InclinationSchema = new Schema({
         default: '',
         trim: true
     },
-    alignments: [{
-        id : String,
-        chance : Number
-    }]
+    conditions : {
+        alignments: [{
+            id : String,
+            chance : Number
+        }]
+    }
 });
 
 /**

@@ -134,7 +134,9 @@ angular.module('mean.admin')
          * Will extract models from form object and send to server then update DynamicForm service.
          */
         $scope.submit = function(){
-            var models = {};
+            var models = {
+                conditions : {}
+            };
 
             //Loop all form files to extract only the proper values to be sent to the server (To limit traffic)
             for(var fType in $scope.form.fields){
@@ -166,10 +168,10 @@ angular.module('mean.admin')
                 } else if (typeof object.fields === 'object'){
                     var name = object.name.toLowerCase();
                     //object is array of field objects
-                    models[name] = [];
+                    models['conditions'][name] = [];
                     object.fields.forEach(function(fieldObj){
                         //fieldObj is added to models object
-                        models[name].push({_id:fieldObj._id,chances:fieldObj.model});
+                        models['conditions'][name].push({_id:fieldObj._id,chances:fieldObj.model});
                     });
                 } else {
                     throw 'Trying to iterate "$scope.form.fields[fType]", but "object" lacks property "fields" or object.fields is not object';

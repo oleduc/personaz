@@ -33,17 +33,11 @@ angular.module('mean.personas').config(['$stateProvider',
         $stateProvider
             .state('all personas', {
                 url: '/personas',
-                templateUrl: 'public/personas/views/list.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
+                templateUrl: 'public/personas/views/list.html'
             })
             .state('generate persona', {
-                url: '/articles/generate',
-                templateUrl: 'public/personas/views/generate.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
+                url: '/personas/generate',
+                templateUrl: 'public/personas/views/generate.html'
             });
     }
 ]);
