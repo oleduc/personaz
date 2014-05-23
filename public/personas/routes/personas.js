@@ -7,6 +7,7 @@ angular.module('mean.personas').config(['$stateProvider',
         //================================================
         // Check if the user is connected
         //================================================
+        /*
         var checkLoggedin = function($q, $timeout, $http, $location) {
             // Initialize a new promise
             var deferred = $q.defer();
@@ -28,6 +29,7 @@ angular.module('mean.personas').config(['$stateProvider',
 
             return deferred.promise;
         };
+        */
 
         // states for my app
         $stateProvider

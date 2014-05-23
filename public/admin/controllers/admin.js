@@ -159,6 +159,8 @@ angular.module('mean.admin')
                     };
                 });
             }
+
+            /*jslint latedef:false*/
             function iterateFieldObject(object){
                 if(!object.hasOwnProperty('fields')){
 
@@ -168,10 +170,10 @@ angular.module('mean.admin')
                 } else if (typeof object.fields === 'object'){
                     var name = object.name.toLowerCase();
                     //object is array of field objects
-                    models['conditions'][name] = [];
+                    models.conditions[name] = [];
                     object.fields.forEach(function(fieldObj){
                         //fieldObj is added to models object
-                        models['conditions'][name].push({_id:fieldObj._id,chances:fieldObj.model});
+                        models.conditions[name].push({_id:fieldObj._id,chances:fieldObj.model});
                     });
                 } else {
                     throw 'Trying to iterate "$scope.form.fields[fType]", but "object" lacks property "fields" or object.fields is not object';

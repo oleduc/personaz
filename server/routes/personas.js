@@ -5,9 +5,9 @@
 
 // Personas routes use persona controller
 var personas = require('../controllers/personas');
-var authorization = require('./middlewares/authorization');
+//var authorization = require('./middlewares/authorization');
 
-
+/*
 // Article authorization helpers
 var hasAuthorization = function(req, res, next) {
     if (req.article.user.id !== req.user.id) {
@@ -15,7 +15,7 @@ var hasAuthorization = function(req, res, next) {
     }
     next();
 };
-
+*/
 module.exports = function(app) {
     app.get('/personas', personas.elements.get.persona);
 

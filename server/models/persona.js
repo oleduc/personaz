@@ -45,17 +45,25 @@ var PersonaSchema = new Schema({
 });
 
 PersonaSchema.methods.generate = function(callback){
-    console.log(Rule);
-};
+    var self = this;
+    Alignment.draw(function(err,drawAl){
+        self.alignments.push(drawAl);
 
-PersonaSchema.methods.drawElement = function(Schema,conditions,callback){
-    if(conditions){
+        Inclination.draw(function(err,drawIn){
+            self.inclinations.push(drawIn);
 
-    } else {
+            Rule.draw({
+                alignments:self.alignments,
+                inclinations:self.inclinations
+                }, function(err,draw){
+                    callback(err,draw);
+            });
 
-    }
+        });
+
+    });
 };
 
 mongoose.model('Persona', PersonaSchema);
 
-function getRandMax(max){return Math.floor((Math.random() * max) + 1)};
+

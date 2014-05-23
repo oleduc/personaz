@@ -36,6 +36,40 @@ var RuleSchema = new Schema({
     }
 });
 
+RuleSchema.statics.draw = function(parents,callback){
+    var self = this;
+    //var rules = [];
+    if(typeof parents === 'function'){
+        callback = parents;
+    }
+    if(parents.hasOwnProperty('alignments') && parents.hasOwnProperty('inclinations')){
+
+        var query = {};
+        /*
+        for(var condition in parents) {
+            query['conditions.'+condition] = {
+                $elemMatch:{
+                    _id:parents[condition][0]._id,
+                    chances:{$gt:0}
+                }
+            };
+        }*/
+
+        self.find(query ,function(err,result){
+            buildProbabilityArray(parents,result);
+            callback(null,result);
+        });
+    } else {
+        callback('Requires parents argument contains "alignments" and "inclinations" to draw');
+    }
+    function buildProbabilityArray(parents,rules){
+        console.log(parents);
+        rules.forEach(function(rule){
+            console.log(rule,rule.conditions.inclinations,rule.conditions.alignments);
+        });
+    }
+};
+
 /**
  * Validations
  */

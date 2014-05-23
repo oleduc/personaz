@@ -10,5 +10,5 @@ angular.module('mean.personas')
             Personas.get({},function(persona){
                 console.log(persona);
             });
-        }
+        };
     }]);

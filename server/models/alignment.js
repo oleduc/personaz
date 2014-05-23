@@ -30,6 +30,20 @@ var AlignmentSchema = new Schema({
     }
 });
 
+
+AlignmentSchema.statics.draw = function(callback){
+    var self = this;
+    self.count(function(err,count){
+        self.findOne({},{_id:1}).limit(1).skip(Math.floor((Math.random() * count))).exec(function(err,draw){
+            if(!err){
+                callback(null,draw);
+            } else {
+                callback(err);
+            }
+        });
+    });
+};
+
 /**
  * Validations
  */

@@ -64,7 +64,8 @@ exports.elements = {
     get    : {
         persona     : function(req,res){
             if(req.query._id){
-
+                //Generate
+                console.log(req.query);
             } else {
                 var persona = new Persona();
                 persona.generate(function(err){
